@@ -5,6 +5,23 @@ Golang HTTP client wrapping httpcontrol.Transport, http.Client &amp; redial.Dial
 [![GoDoc](http://godoc.org/github.com/linkosmos/rehttp?status.svg)](http://godoc.org/github.com/linkosmos/rehttp)
 [![BSD License](http://img.shields.io/badge/license-BSD-blue.svg)](http://opensource.org/licenses/BSD-3-Clause)
 
+### Features
+
+ - Connection pool
+ - Layered timeout's
+ - Request stats
+ - Lower/Higher level API
+ - Cached DNS records with round-robin or random access
+ - Request retry
+ - Keep alive
+ - Compression
+ - HTTPS
+
+### Wrapper
+
+This package wraps underlying layers of http request procedure into readable & configurable options.
+Package exposes 2 major components http Client & Transport.
+HTTP Client is swappable where Transport but satisfies standard library interface.
 
 ### License
 
