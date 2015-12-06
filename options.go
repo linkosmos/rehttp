@@ -18,6 +18,7 @@ const (
 	DefaultTransportDisableKeepAlives   = false
 	DefaultTransportDisableCompression  = false
 	DefaultTransportMaxIdleConnsPerHost = http.DefaultMaxIdleConnsPerHost
+	DefaultTransportRetryAfterTimeout   = true
 	DefaultClientTimeout                = 1 * time.Minute // Default 3 min
 	DefaultTLSInsecureSkipVerify        = false
 	DefaultConnPoolInitial              = 2
@@ -36,6 +37,7 @@ func NewOptions() (op *Options) {
 		TransportDisableKeepAlives:   DefaultTransportDisableKeepAlives,
 		TransportDisableCompression:  DefaultTransportDisableCompression,
 		TransportMaxIdleConnsPerHost: DefaultTransportMaxIdleConnsPerHost,
+		TransportRetryAfterTimeout:   DefaultTransportRetryAfterTimeout,
 		ClientTimeout:                DefaultClientTimeout,
 		TLSInsecureSkipVerify:        DefaultTLSInsecureSkipVerify,
 		ConnPoolInitial:              DefaultConnPoolInitial,
@@ -134,6 +136,15 @@ type Options struct {
 	// writing the request (including its body, if any). This
 	// time does not include the time to read the response body.
 	TransportResponseHeaderTimeout time.Duration
+
+	// RetryAfterTimeout, if true, will enable retries for a number of failures
+	// that are probably safe to retry for most cases but, depending on the
+	// context, might not be safe. Retried errors: net.Errors where Timeout()
+	// returns `true` or timeouts that bubble up as url.Error but were originally
+	// net.Error, OpErrors where the request was cancelled (either by this lib or
+	// by the calling code, or finally errors from requests that were cancelled
+	// before the remote side was contacted.
+	TransportRetryAfterTimeout bool
 
 	//
 	////////////////////////////////
